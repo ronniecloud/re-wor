@@ -1,0 +1,41 @@
+# Build output
+out/
+build/
+generated/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+CMakeUserPresets.json
+
+# OS
+Thumbs.db
+.DS_Store
+nul
+
+# Assets (game data - do NOT commit, extract from ISO)
+assets/*
+!assets/.gitignore
+
+# Binaries
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+
+# Logs
+*.log
+
+# Crash dumps
+crashdumps/
+
+# AI tool configs
+.sisyphus/
+opencode.json
+oh-my-opencode.json
