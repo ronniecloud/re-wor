@@ -8,6 +8,7 @@
 #include <rex/runtime.h>
 #include <rex/audio/sdl/sdl_audio_system.h>
 #include <rex/input/input_system.h>
+#include <rex/ui/keybinds.h>
 
 #include <cstdio>
 #include <unordered_set>
@@ -193,6 +194,11 @@ class ReWorApp : public rex::ReXApp {
     fill_dispatch_table(base);
     discord_init();
     discord_update();
+
+    // F11: Toggle borderless fullscreen
+    rex::ui::RegisterBind("fullscreen_toggle", "F11", "Toggle fullscreen", [this]() {
+        window()->SetFullscreen(!window()->IsFullscreen());
+    });
 #ifdef REWOR_DEV
     StubTracker::instance().start_reporter(5);
 #endif

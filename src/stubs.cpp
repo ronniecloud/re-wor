@@ -8,6 +8,8 @@
 #include <rex/ppc.h>
 #ifdef REWOR_DEV
 #include "stub_tracker.h"
+#else
+#define PPC_STUB_TRACKED(subroutine) PPC_STUB(subroutine)
 #endif
 
 // --- XCustom (Guitar Hero dashboard hooks) ---
@@ -112,7 +114,9 @@ PPC_STUB_TRACKED(__imp__XeCryptMd5Final);
 // Return a dummy handle
 // ---------------------------------------------------------------------------
 extern "C" PPC_FUNC(__imp__XNotifyCreateListener) {
+#ifdef REWOR_DEV
   StubTracker::instance().record_unmapped(0, 0);
+#endif
   ctx.r3.u64 = 0xDEAD0002; // dummy notification listener handle
 }
 
@@ -135,7 +139,9 @@ extern "C" PPC_FUNC(__imp__XNotifyCreateListener) {
 //   +0x18: VideoStandard
 // ---------------------------------------------------------------------------
 extern "C" PPC_FUNC(__imp__XGetVideoMode) {
+#ifdef REWOR_DEV
   StubTracker::instance().record_unmapped(0, 0);
+#endif
   uint32_t mode_addr = static_cast<uint32_t>(ctx.r3.u64);
   if (mode_addr == 0) return;
 
