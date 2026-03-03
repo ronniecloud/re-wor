@@ -1,5 +1,6 @@
 
-# <img width="1536" height="1024" alt="77d74078-a914-467a-9369-20964b77e6f8" src="https://github.com/user-attachments/assets/89298cf2-a0dc-4a45-9bc7-71fbf4a614e6" />
+# <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/acde8277-e179-48aa-a379-329655ab4323" />
+
 
 
 An unofficial PC port of **Guitar Hero: Warriors of Rock** (Xbox 360) created through the process of static recompilation.
