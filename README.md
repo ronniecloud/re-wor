@@ -1,57 +1,42 @@
-# re-wor — Guitar Hero: Warriors of Rock (Xbox 360 → PC)
+<div align="center">
 
-⚠️ Early Release (v1.0) — This is the first public release. Bugs, crashes, and performance issues are expected and will be addressed in future updates. Bug reports and contributions are welcome!
+# re-wor
 
-Native recompilation of **Guitar Hero: Warriors of Rock** (Xbox 360) for PC, using the [RexGlue SDK](https://github.com/rexglue/rexglue-sdk). Based on [re-gh2](https://github.com/YoshiCrystal9/re-gh2) by YoshiCrystal9.
+An unofficial PC port of **Guitar Hero: Warriors of Rock** (Xbox 360) created through the process of static recompilation.
 
-## Legal Disclaimer
+**This project does not include any game assets. You must provide the files from your own legally acquired copy of the game.**
 
-This is an educational/reverse engineering project. No game files included. You MUST own a legitimate copy of Guitar Hero: Warriors of Rock (Xbox 360). Game assets are copyrighted by Activision/Neversoft and are NOT included.
+[Latest Release](https://github.com/ronniecloud/re-wor/releases/latest)
 
-## Current Status
+Built on top of the [RexGlue SDK](https://github.com/rexglue/rexglue-sdk) recompilation toolchain. Based on [re-gh2](https://github.com/YoshiCrystal9/re-gh2) by YoshiCrystal9.
 
-- ✅ Boot and menu working
-- ✅ Gameplay playable with guitar (XINPUT)
-- ✅ Multi-channel audio (XMA → SDL, 6 channels)
-- ✅ Fullscreen (F11)
-- ⚠️ Audio may have slight delay vs chart
-- ⚠️ Native 720p resolution (upscale in development)
-- ⚠️ Game logic runs at 60fps (original engine limitation)
+</div>
 
-## Known Issues
+## Table of Contents
 
-- Slight audio delay vs chart
-- Fixed 720p resolution
-- 60fps game logic cap
-- Possible crashes during song transitions
+- [System Requirements](#system-requirements)
+- [How to Install](#how-to-install)
+- [Features](#features)
+- [Known Issues](#known-issues)
+- [FAQ](#faq)
+- [Building from Source](#building-from-source)
+- [Project Structure](#project-structure)
+- [Credits](#credits)
 
-## Prerequisites
+## System Requirements
 
-- **Clang 20+** (LLVM)
-- **CMake 3.25+**
-- **Ninja**
+- **OS**: Windows 10/11 (64-bit)
+- **CPU**: Any modern x86-64 processor
+- **GPU**: DirectX 12 compatible
+- **Clang 20+** (LLVM), **CMake 3.25+**, **Ninja** (for building from source)
 - **RexGlue SDK** compiled and installed
-- **GH:WoR Xbox 360 ISO** (legitimate copy)
+- A legitimate copy of **Guitar Hero: Warriors of Rock** (Xbox 360)
 
-## Setup
+## How to Install
 
-### 1. Clone the repository
+1. Download the latest release from the [Releases](https://github.com/ronniecloud/re-wor/releases/latest) page.
+2. Extract the contents of your Xbox 360 ISO into the `assets/` folder.
 
-```bash
-git clone --recursive https://github.com/ronniecloud/re-wor.git
-cd re-wor
-```
-
-### 2. Extract game files
-
-Extract the contents of your Xbox 360 ISO into the `assets/` folder:
-
-```bash
-# Use extract-xiso or equivalent tool
-extract-xiso -d assets/ GH_WarriorsOfRock.iso
-```
-
-Expected structure:
 ```
 assets/
 ├── default.xex          # Xbox 360 executable
@@ -60,15 +45,64 @@ assets/
     └── scripts/         # QScript (.qb.xen)
 ```
 
-> ⚠️ **Do NOT commit files in `assets/`** — they are already in `.gitignore`.
+3. Run `Guitar Hero Warriors of Rock.exe`.
 
-### 3. Configure RexGlue SDK
+> [!NOTE]
+> You can use `extract-xiso` or any equivalent tool to extract the ISO contents.
 
-Ensure the RexGlue SDK is compiled and installed.
+> [!TIP]
+> Connect your USB guitar controller before launching. It will be auto-detected via XINPUT.
 
-### 4. Build
+## Features
+
+### Native PC Recompilation
+
+The entire Xbox 360 executable has been statically recompiled from PowerPC to x86-64. This is not emulation — the game runs natively on your hardware with no translation overhead at runtime.
+
+### XINPUT Controller Support
+
+Guitar controllers and gamepads are supported natively through XINPUT. Plug in your USB guitar and it will be detected automatically. No configuration or mapping required.
+
+### Multi-Channel Audio
+
+The original XMA2 audio streams are decoded and played back through SDL with full 6-channel support. The audio pipeline preserves the original mix as faithfully as possible.
+
+### Fullscreen Mode
+
+Press **F11** at any time to toggle between windowed and fullscreen modes.
+
+### Discord Rich Presence
+
+The game integrates with Discord to show your current activity status while playing.
+
+## Known Issues
+
+- Slight audio delay relative to the note chart in some configurations.
+- Rendering is locked to the original 720p resolution. Higher resolution support is in development.
+- Possible crashes during song transitions or scene changes.
+- Game logic runs at the original 60Hz tick rate.
+
+## FAQ
+
+**Q: Do I need the original game?**
+Yes. This project does not include any copyrighted game assets. You must own a legitimate copy of Guitar Hero: Warriors of Rock for Xbox 360.
+
+**Q: Is this emulation?**
+No. The game has been statically recompiled from PowerPC to native x86-64 code. It runs directly on your CPU without any emulation layer.
+
+**Q: My guitar controller isn't detected?**
+Make sure it's connected before launching the game. The controller must be XINPUT-compatible.
+
+**Q: The audio is slightly off-sync?**
+This is a known issue being worked on. Audio timing calibration improvements are planned for future releases.
+
+## Building from Source
 
 ```bash
+# Clone the repository
+git clone --recursive https://github.com/ronniecloud/re-wor.git
+cd re-wor
+
 # Configure
 cmake --preset win-amd64-relwithdebinfo
 
@@ -79,18 +113,8 @@ cmake --build out/build/win-amd64-relwithdebinfo --target re_wor_codegen
 cmake --build out/build/win-amd64-relwithdebinfo
 ```
 
-### 5. Run
-
-```bash
-./out/build/win-amd64-relwithdebinfo/"Guitar Hero Warriors of Rock.exe"
-```
-
-## Controls
-
-| Key | Action |
-|-------|------|
-| F11 | Fullscreen |
-| USB Guitar | Auto-detected via XINPUT |
+> [!NOTE]
+> The RexGlue SDK must be compiled and installed before building this project.
 
 ## Project Structure
 
@@ -99,27 +123,29 @@ re-wor/
 ├── CMakeLists.txt          # Build system
 ├── CMakePresets.json        # Build presets
 ├── re_wor_config.toml       # PPC function map (codegen input)
-├── app_icon.ico             # Executable icon
-├── app_icon.rc              # Resource file (Windows)
 ├── src/
-│   ├── main.cpp             # Entry point + app class
-│   └── stubs.cpp            # Stubs for unimplemented functions
+│   ├── main.cpp             # Entry point, app lifecycle, crash handler
+│   ├── stubs.cpp            # Xbox 360 API stubs (XAM, avatars, marketplace)
+│   └── discord_rpc.cpp      # Discord Rich Presence integration
 ├── generated/               # Codegen output (auto-generated, gitignored)
-└── assets/                  # ISO content (gitignored)
+└── assets/                  # Game files from ISO (gitignored)
 ```
 
 ## Engine Info
 
-GH:WoR uses the **Neversoft engine**:
-- **Filesystem**: PAK/PAB (`.pak.xen` / `.pab.xen`)
-- **Audio**: XMA2 → FMOD Sound Bank (`.fsb.xen`)
-- **Scripting**: QScript (Neversoft proprietary)
+Guitar Hero: Warriors of Rock runs on the **Neversoft engine**, shared with the Tony Hawk series:
+
+- **Filesystem**: PAK/PAB archives (`.pak.xen` / `.pab.xen`)
+- **Audio**: XMA2 encoded, stored in FMOD Sound Banks (`.fsb.xen`)
+- **Scripting**: QScript (Neversoft proprietary bytecode)
 - **Title ID**: `41560883`
+
+## Credits
+
+- **[RexGlue SDK](https://github.com/rexglue/rexglue-sdk)** — Recompilation toolchain
+- **[YoshiCrystal9](https://github.com/YoshiCrystal9/re-gh2)** — re-gh2 (Guitar Hero 2 recomp, base reference)
+- **Neversoft / Activision** — Original game development
 
 ## Bug Reports
 
-If you find a bug, please open an [issue](https://github.com/ronniecloud/re-wor/issues).
-
-## Project Type
-
-Educational and reverse engineering project.
+Found a bug? Please open an [issue](https://github.com/ronniecloud/re-wor/issues) with steps to reproduce.
