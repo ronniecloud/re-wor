@@ -223,6 +223,8 @@ class ReWorApp : public rex::ReXApp {
       }
     }
 #endif
+    // Start in borderless fullscreen by default
+    window()->SetFullscreen(true);
   }
 
   static std::unique_ptr<rex::ui::WindowedApp> Create(
