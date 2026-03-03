@@ -192,6 +192,7 @@ class ReWorApp : public rex::ReXApp {
     
     uint8_t* base = runtime()->virtual_membase();
     fill_dispatch_table(base);
+    window()->SetTitle("Guitar Hero: Warriors of Rock");
     discord_init();
     discord_update();
 
