@@ -1,10 +1,9 @@
 
 # <img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/acde8277-e179-48aa-a379-329655ab4323" />
+ 
 
-⚠️ 
 
-
-Please note that this is a TEST version and not a final version, so there may be several issues in the game that I have not yet recognized. Feel free to report any issues.
+⚠️Please note that this is a TEST version and not a final version, so there may be several issues in the game that I have not yet recognized. Feel free to report any issues.
 
 
 
